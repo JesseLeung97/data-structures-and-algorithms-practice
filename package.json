@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "typescript": "^4.7.2"
+  },
+  "scripts": {
+    "compile": "npx tsc",
+    "clean": "rm -rf ./compiled/**",
+    "stack": "rm -rf ./compiled/stack/** && npx tsc ./src/stack/stack.ts --outfile ./compiled/stack/stack.js && node ./compiled/stack/stack.js",
+    "singly-linked-list": "rm -rf ./compiled/singly-linked-list/** && npx tsc ./src/singly-linked-list/singly-linked-list.ts --outfile ./compiled/singly-linked-list/singly-linked-list.js && node ./compiled/singly-linked-list/singly-linked-list.js",
+    "doubly-linked-list": "rm -rf ./compiled/doubly-linked-list/** && npx tsc ./src/doubly-linked-list/doubly-linked-list.ts --outfile ./compiled/doubly-linked-list/doubly-linked-list.js && node ./compiled/doubly-linked-list/doubly-linked-list.js",
+    "dynamic-array": "rm -rf ./compiled/dynamic-array/** && npx tsc ./src/dynamic-array/dynamic-array.ts --outfile ./compiled/dynamic-array/dynamic-array.js && node ./compiled/dynamic-array/dynamic-array.js"
+  }
+}

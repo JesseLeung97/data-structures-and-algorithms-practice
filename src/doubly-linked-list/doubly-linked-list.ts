@@ -3,6 +3,7 @@
 // Insertion
 // Deletion
 // Merging (of two or more lists)
+
 (function() {
 //#region Doubly linked list
 class node<T> {

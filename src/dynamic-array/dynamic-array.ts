@@ -5,16 +5,19 @@
 // Insertion
 // Deletion
 // Appending
+
 (function() {
 //#region Dynamic array
 class DyanmicArray<T> {
     elements: T[] | null;
     length: number = 0;
+    _fill: number = 0;
     _capacity: number = 0;
     _resizeCapacity = 0.8;
     _resizeFactor = 2;
 
-    constructor(capacity: number = -1, inputElements: T[] | null = null) {
+    //TODO redo this to allow for two types of initialization
+    constructor(capacity: number = 0, inputElements: T[] | null = null) {
         if(capacity < 0) {
             return;
         }
@@ -24,10 +27,11 @@ class DyanmicArray<T> {
             this.elements = this._Array(capacity);
         } else {
             this.length = capacity;
-            this._capacity = capacity * this._resizeFactor;
+            this._capacity = inputElements.length * this._resizeFactor;
             this.elements = this._Array(this._capacity);
             for(let i = 0; i < inputElements.length; i++) {
                 this.elements[i] = inputElements[i];
+                this._fill++;
             }
         }
     }
@@ -37,11 +41,28 @@ class DyanmicArray<T> {
         return Object.seal(Array<T>(length).fill(null));
     }
 
+    _outOfBounds(index: number): boolean {
+        if(index < 0 || index > this.length - 1) {
+            return true;
+        }
+        return false;
+    }
+
     get(index: number): T {
+        if(this._outOfBounds(index)) {
+            return;
+        }
         return this.elements[index];
     }
 
     set(index: number, value: T): void {
+        if(this._outOfBounds(index)) {
+            return;
+        }
+        if(this.elements[index] === null) {
+            this._fill++;
+            this.length++;
+        }
         this.elements[index] = value;
     }
 
@@ -82,13 +103,14 @@ class DyanmicArray<T> {
         if(this._needToResize()) {
             this._resizeArray();
         }
-        this.elements[this.length] = value;
+        this.elements[this._fill] = value;
+        this._fill += 1;
         this.length += 1;
         
     }
 
-    insert(value: T, index: number): void {
-        if(index < 0 || index > this.length - 1) {
+    insert(index: number, value: T): void {
+        if(this._outOfBounds(index)) {
             return;
         }
         if(this._needToResize()) {
@@ -101,8 +123,8 @@ class DyanmicArray<T> {
     }
 
     deleteIndex(index: number): T {
-        if(index < 0 || index > this.length - 1) {
-            return null;
+        if(this._outOfBounds(index)) {
+            return;
         }
         let deletedValue = this.elements[index];
         this.elements[index] = null;
@@ -112,6 +134,7 @@ class DyanmicArray<T> {
         }
         this.elements[i - 1] = null;
         this.length -= 1;
+        this._fill -= 1;
         return deletedValue;
     }
 
@@ -127,8 +150,10 @@ class DyanmicArray<T> {
     }
 
     deleteAll(): void {
-        let emptyArray = this._Array<T>(this._capacity);
-        this.elements = emptyArray;
+        this.elements = null;
+        this._fill = 0;
+        this.length = 0;
+        this._capacity = 0;
     }
 
     printArray(): void {
@@ -149,8 +174,8 @@ function main() {
     testArray.append(7);
     testArray.append(813);
     testArray.printArray();
-    console.log(testArray.deleteValue(3));
-    testArray.printArray();
+    //console.log(testArray.deleteValue(3));
+    //testArray.printArray();
     testArray.deleteAll();
 
     let testArrayFilled = new DyanmicArray<number>(undefined, [5, 6, 1002, 435, 667, 124]);
