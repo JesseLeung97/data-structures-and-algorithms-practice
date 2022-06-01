@@ -27,6 +27,7 @@ class Node<T> {
         this.previous = previous;
     }
 }
+
 class DoublyLinkedList<T> {
     head: Node<T> = null;
     tail: Node<T> = null;
@@ -173,7 +174,8 @@ class DoublyLinkedList<T> {
     }
 }
 //#endregion
-//#region Queue
+
+//#region Doubly linked list queue
 class Queue<T> {
     list: DoublyLinkedList<T> | null = null;
 
@@ -217,6 +219,125 @@ function main() {
     queue.enqueue("doesn't");
     queue.enqueue("work");
     queue.enqueue("lol");
+    console.log(queue.size(), queue.toString());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+}
+
+//main();
+//#endregion
+})();
+
+//#region Static array
+(function() {
+function StaticArray<T>(length: number): T[] {
+    return Object.seal(Array<T>(length).fill(null));
+}
+//#endregion
+
+//#region Static array Queue
+class Queue<T> {
+    array: Array<T> | null = null;
+    front: number = 0;
+    end: number = 0;
+
+    constructor(maxQueueLength: number) {
+        this.array = StaticArray<T>(maxQueueLength);
+    }
+
+    enqueue(value: T): void {
+        if(this.end + 1 > this.array.length - 1) {
+            this.end = 0;
+            this.array[this.end] = value;
+            return;
+        }
+        this.end += this.array[this.end] === null ? 0 : 1;
+        this.array[this.end] = value;
+    }
+
+    dequeue(): T | null {
+        const removed = this.array[this.front];
+        this.array[this.front] = null;
+        if(this.front + 1 > this.array.length - 1) {
+            this.front = 0;
+            return removed;
+        }
+        this.front += 1;
+        return removed;
+    }
+
+    peek(): T | null {
+        return this.array[this.front];
+    }
+
+    indexOf(value: T) {
+        let i = this.front;
+        let index = 0;
+        while(i !== this.end) {
+            if(this.array[i] === value) {
+                return index;
+            }
+            if(i === this.array.length - 1) {
+                i = 0;
+            } else {
+                i++;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+    size(): number {
+        if(this.front > this.end) {
+            const frontToLength = this.array.length - 1 - this.front;
+            return frontToLength + this.end;
+        } else if (this.front < this.end) {
+            return this.end + 1 - this.front;
+        } else {
+            return 0;
+        }
+    }
+
+    toString(): string {
+        let builder = "[";
+        let i = this.front;
+        while(i !== this.end) {
+            builder += ` ${this.array[i]}`;
+            if(i === this.array.length - 1) {
+                i = 0;
+            } else {
+                i++;
+            }
+        }
+        builder += ` ${this.array[this.end]}`;
+        builder += " ]";
+        return builder;
+    }
+}
+//#endregion
+
+//#region Test
+function main() {
+    let queue = new Queue<string>(10);
+    console.log(queue.size(), queue.toString());
+    queue.enqueue("This");
+    queue.enqueue("time");
+    queue.enqueue("I'm");
+    queue.enqueue("using");
+    queue.enqueue("a");
+    queue.enqueue("static");
+    queue.enqueue("array");
+    queue.enqueue("as");
+    queue.enqueue("the");
+    queue.enqueue("queue");
     console.log(queue.size(), queue.toString());
     console.log(queue.dequeue());
     console.log(queue.dequeue());

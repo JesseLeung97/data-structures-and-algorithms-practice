@@ -3,13 +3,12 @@
         "rootDir": "./src/",
         "outDir": "./compiled/",
         "lib": [
-            "ES2015",
+            "ES6",
             "DOM"
         ]
     },
     "exclude": [
         "./node_modules",
         "./compiled/**/*"
-    ],
-    "compileOnSave": true
+    ]
 }
