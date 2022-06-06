@@ -9,6 +9,8 @@
     "singly-linked-list": "rm -rf ./compiled/singly-linked-list/** && npx tsc ./src/singly-linked-list/singly-linked-list.ts --outfile ./compiled/singly-linked-list/singly-linked-list.js && node ./compiled/singly-linked-list/singly-linked-list.js",
     "doubly-linked-list": "rm -rf ./compiled/doubly-linked-list/** && npx tsc ./src/doubly-linked-list/doubly-linked-list.ts --outfile ./compiled/doubly-linked-list/doubly-linked-list.js && node ./compiled/doubly-linked-list/doubly-linked-list.js",
     "dynamic-array": "rm -rf ./compiled/dynamic-array/** && npx tsc ./src/dynamic-array/dynamic-array.ts --outfile ./compiled/dynamic-array/dynamic-array.js && node ./compiled/dynamic-array/dynamic-array.js",
-    "queue": "rm -rf ./compiled/queue/** && npx tsc ./src/queue/queue.ts --outfile ./compiled/queue/queue.js --lib 'es6, dom' && node ./compiled/queue/queue.js"
+    "queue": "rm -rf ./compiled/queue/** && npx tsc ./src/queue/queue.ts --outfile ./compiled/queue/queue.js --lib 'es6, dom' && node ./compiled/queue/queue.js",
+    "binary-heap": "rm -rf ./compiled/binary-heap/** && npx tsc ./src/binary-heap/binary-heap.ts --outfile ./compiled/binary-heap/binary-heap.js --lib 'es6, dom' && node ./compiled/binary-heap/binary-heap.js",
+    "priority-queue": "rm -rf ./compiled/priority-queue/** && npx tsc ./src/priority-queue/priority-queue.ts --outfile ./compiled/priority-queue/priority-queue.js --lib 'es6, dom' && node ./compiled/priority-queue/priority-queue.js"
   }
 }
