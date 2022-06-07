@@ -61,39 +61,31 @@ class BinaryHeap<T> {
         return rightChildIdx;
     }
 
-    _parent(idx: number): T | null {
-        const parentIdx = this._parentIdx(idx);
-        if(this._outOfBounds(idx)) {
-            return null;
-        }
-        return this._heapNodes[parentIdx];
+    _isLess(idx1: number, idx2: number): boolean {
+        const elem1 = this._heapNodes[idx1];
+        const elem2 = this._heapNodes[idx2];
+        return this._comparator(elem1, elem2) <= 0;
     }
 
-    _leftChild(idx: number): T | null {
-        const leftChildIdx = (idx * 2) + 1;
-        if(this._outOfBounds(leftChildIdx)) {
-            return null;
-        }
-        return this._heapNodes[leftChildIdx];
-    }
-
-    _rightChild(idx: number): T | null {
-        const rightChildIdx = (idx * 2) + 2;
-        if(this._outOfBounds(rightChildIdx)) {
-            return null;
-        }
-        return this._heapNodes[rightChildIdx];
+    _swap(idx1: number, idx2: number) {
+        const temp = this._heapNodes[idx2];
+        this._heapNodes[idx2] = this._heapNodes[idx1];
+        this._heapNodes[idx1] = temp;
     }
 
     insert(element: T) {
         this._size++;
         let idx = this._size;
-        while(this._comparator(element, this._heapNodes[this._parentIdx(idx)]) < 1) {
-            const parentIdx = this._parentIdx(idx);
-            const temp = this._heapNodes[parentIdx];
-            this._heapNodes[parentIdx] = element;
-            this._heapNodes[idx] = temp;
-            idx = parentIdx;
+        this._heapNodes[idx] = element;
+        this._bubbleUp(idx);
+    }
+
+    _bubbleUp(idx: number): void {
+        let parent = this._parentIdx(idx);
+        while(idx > 0 && this._isLess(idx, parent)) {
+            this._swap(idx, parent);
+            idx = parent;
+            parent = this._parentIdx(idx);
         }
     }
 
