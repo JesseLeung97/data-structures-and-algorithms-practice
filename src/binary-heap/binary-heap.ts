@@ -22,11 +22,11 @@ class BinaryHeap<T> {
         return Array<T>(length).fill(null);
     }
 
+    // (O(nlogn)) --> add === O(logn), n elements, O(nlogn)
     constructor(elements: T[], comparator: (elem1: T, elem2: T) => -1 | 0 | 1 ) {
         this._capacity = elements.length;
         this._comparator = comparator;
         this._heapNodes = this._DynamicArray<T>(elements.length);
-        this.heapify(this._heapNodes);
         elements.forEach(elem => this.insert(elem));
     }
 
@@ -73,13 +73,6 @@ class BinaryHeap<T> {
         this._heapNodes[idx1] = temp;
     }
 
-    insert(element: T) {
-        this._size++;
-        let idx = this._size;
-        this._heapNodes[idx] = element;
-        this._bubbleUp(idx);
-    }
-
     _bubbleUp(idx: number): void {
         let parent = this._parentIdx(idx);
         while(idx > 0 && this._isLess(idx, parent)) {
@@ -89,9 +82,63 @@ class BinaryHeap<T> {
         }
     }
 
-    heapify(elements: T[]) {
+    _bubbleDown(idx: number): void {
+        while(true) {
+            let left = this._leftChildIdx(idx);
+            let right = this._rightChildIdx(idx);
+            let smallest = left;
+            if(right < this._size && this._isLess(right, left)) {
+                smallest = right;
+            }
+            if(idx > this._size - 1 || this._isLess(idx, smallest)) {
+                break;
+            }
+            this._swap(idx, smallest);
+            idx = smallest;
+        }
+    }
 
+    // O(logn) --> _bubbleUp() === O(logn)
+    insert(element: T) {
+        this._size++;
+        let idx = this._size;
+        this._heapNodes[idx] = element;
+        this._bubbleUp(idx);
+    }
 
+    removeAt(idx: number): T | null {
+        if(this._outOfBounds(idx)) {
+            return null;
+        }
+        this._size--;
+        const removed = this._heapNodes[idx];
+        this._swap(idx, this._size - 1);
+        this._heapNodes[this._size - 1] = null;
+        if(idx === (this._size - 1)) {
+            return removed;
+        }
+        const temp = this._heapNodes[idx];
+        this._bubbleDown(idx);
+        if(this._heapNodes[idx] === temp) {
+            this._bubbleUp(idx);
+        }
+        return removed;
+    }
+
+    isMinHeap(idx: number): boolean {
+        if(idx >= this._size) {
+            return true;
+        }
+        const left = this._leftChildIdx(idx);
+        const right = this._rightChildIdx(idx);
+        if(left < this._size && this._isLess(idx, left)) {
+            return false;
+        }
+        if(right < this._size && this._isLess(idx, right)) {
+            return false;
+        }
+        return this.isMinHeap(left) && this.isMinHeap(right);
+        
     }
     
 }
