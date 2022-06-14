@@ -11,7 +11,7 @@
     "dynamic-array": "rm -rf ./compiled/dynamic-array/** && npx tsc ./src/dynamic-array/dynamic-array.ts --outfile ./compiled/dynamic-array/dynamic-array.js && node ./compiled/dynamic-array/dynamic-array.js",
     "queue": "rm -rf ./compiled/queue/** && npx tsc ./src/queue/queue.ts --outfile ./compiled/queue/queue.js --lib 'es6, dom' && node ./compiled/queue/queue.js",
     "binary-heap": "rm -rf ./compiled/binary-heap/** && npx tsc ./src/binary-heap/binary-heap.ts --outfile ./compiled/binary-heap/binary-heap.js --lib 'es6, dom' && node ./compiled/binary-heap/binary-heap.js",
-    "priority-queue": "rm -rf ./compiled/priority-queue/** && npx tsc ./src/priority-queue/priority-queue.ts --outfile ./compiled/priority-queue/priority-queue.js --lib 'es6, dom' && node ./compiled/priority-queue/priority-queue.js"
+    "priority-queue": "rm -rf ./compiled/priority-queue/** && npx tsc ./src/priority-queue/priority-queue.ts --outfile ./compiled/priority-queue/priority-queue.js --lib 'es6, dom' && node ./compiled/priority-queue/priority-queue.js",
     "binary-search-tree": "rm -rf ./compiled/binary-search-tree/** && npx tsc ./src/binary-search-tree/binary-search-tree.ts --outfile ./compiled/binary-search-tree/binary-search-tree.js --lib 'es6, dom' && node ./compiled/binary-search-tree/binary-search-tree.js"
   }
 }
